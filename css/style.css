@@ -633,4 +633,9 @@ div.toast_shown {
 .reactions .reaction .count {
     margin-right: 8px;
     line-height: 20px;
+
+}
+.history {
+    display: flex;
+    flex-direction: column-reverse;
 }

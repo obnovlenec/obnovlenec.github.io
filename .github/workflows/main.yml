@@ -10,33 +10,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Клонируем репозиторий
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2️⃣ Настраиваем Python
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.11"
 
-      # 3️⃣ Устанавливаем зависимости
       - name: Install dependencies
         run: pip install requests
 
-      # 4️⃣ Запускаем скрипт бота
       - name: Run bot script
         run: python bot.py
         env:
           TG_TOKEN: ${{ secrets.TG_TOKEN }}
           CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
 
-      # 5️⃣ Коммитим и пушим изменения в репозиторий
       - name: Commit and push changes
         run: |
           git config user.name "telegram-bot"
           git config user.email "bot@example.com"
           git add .
           git commit -m "Auto update from Telegram" || echo "No changes"
-          git pull --rebase origin main || echo "No remote changes"
+          git pull --rebase origin main || echo "Nothing to pull"
           git push origin main

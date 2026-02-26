@@ -2,7 +2,7 @@ name: Telegram Auto Export
 
 on:
   schedule:
-    - cron: "*/5 * * * *"   # каждые 5 минут
+    - cron: "*/5 * * * *"
   workflow_dispatch:
 
 jobs:
@@ -33,4 +33,5 @@ jobs:
           git config user.email "bot@example.com"
           git add .
           git commit -m "Auto update from Telegram" || echo "No changes"
-          git push --force
+          git pull origin main --rebase
+          git push

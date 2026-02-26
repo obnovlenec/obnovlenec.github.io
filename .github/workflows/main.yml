@@ -2,8 +2,8 @@ name: Telegram Auto Export
 
 on:
   schedule:
-    - cron: "*/5 * * * *"   # каждые 5 минут
-  workflow_dispatch:        # возможность запускать вручную
+    - cron: "*/5 * * * *"  # каждые 5 минут
+  workflow_dispatch:
 
 jobs:
   build:
@@ -31,12 +31,12 @@ jobs:
           TG_TOKEN: ${{ secrets.TG_TOKEN }}
           CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
 
-      # 5️⃣ Коммитим и пушим изменения
+      # 5️⃣ Коммитим и пушим изменения в репозиторий
       - name: Commit and push changes
         run: |
           git config user.name "telegram-bot"
           git config user.email "bot@example.com"
           git add .
           git commit -m "Auto update from Telegram" || echo "No changes"
-          git pull --rebase origin main
-          git push
+          git pull --rebase origin main || echo "No remote changes"
+          git push origin main

@@ -2,8 +2,8 @@ name: Telegram Auto Export
 
 on:
   schedule:
-    - cron: "*/5 * * * *"
-  workflow_dispatch:
+    - cron: "*/5 * * * *"  # запуск каждые 5 минут
+  workflow_dispatch:       # ручной запуск
 
 jobs:
   build:
@@ -13,7 +13,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # важно, чтобы была полная история для pull/rebase
+          fetch-depth: 0  # важно, чтобы была вся история для pull
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -33,8 +33,13 @@ jobs:
         run: |
           git config user.name "telegram-bot"
           git config user.email "bot@example.com"
+
           git add .
+
           git commit -m "Auto update from Telegram" || echo "No changes"
-          git fetch origin main
-          git rebase origin/main || git rebase --abort
-          git push origin main --force-with-lease
+
+          # подтягиваем изменения с GitHub, чтобы не было конфликта
+          git pull origin main --rebase
+
+          # пушим на GitHub
+          git push origin main

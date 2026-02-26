@@ -2,11 +2,11 @@ name: Telegram Auto Export
 
 on:
   schedule:
-    - cron: "*/5 * * * *"  # каждые 5 минут
+    - cron: "*/5 * * * *"   # каждые 5 минут
   workflow_dispatch:
 
 jobs:
-  update_site:
+  build:
     runs-on: ubuntu-latest
 
     steps:
